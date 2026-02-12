@@ -32,6 +32,19 @@ pub fn build_dashboard(
 
     let toolbar_view = libadwaita::ToolbarView::new();
     let header = libadwaita::HeaderBar::new();
+
+    // Add menu button
+    let menu_button = gtk4::MenuButton::new();
+    menu_button.set_icon_name("open-menu-symbolic");
+
+    let menu = gtk4::gio::Menu::new();
+    menu.append(Some("About Voice Prompt"), Some("app.about"));
+    menu.append(Some("Hide Window"), Some("app.hide-window"));
+    menu.append(Some("Quit"), Some("app.quit"));
+
+    menu_button.set_menu_model(Some(&menu));
+    header.pack_end(&menu_button);
+
     toolbar_view.add_top_bar(&header);
 
     let content = gtk4::Box::new(gtk4::Orientation::Vertical, 0);

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Type=Application
+Name=Voice Prompt
+GenericName=Voice-to-Clipboard Tool
+Comment=Record speech, transcribe locally, and copy refined prompts to clipboard
+Icon=voice-prompt
+Exec=voice-prompt
+Terminal=false
+Categories=Utility;AudioVideo;Audio;Recorder;
+Keywords=voice;speech;transcription;whisper;clipboard;AI;
+StartupNotify=true
+StartupWMClass=voice-prompt
+X-GNOME-UsesNotifications=true

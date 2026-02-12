@@ -33,7 +33,7 @@ install_macos() {
 }
 
 install_fedora() {
-    echo "[1/3] Installing Fedora packages..."
+    echo "[1/4] Installing Fedora packages..."
     sudo dnf install -y \
         gtk4-devel libadwaita-devel gtk4-layer-shell-devel \
         wayland-devel wayland-protocols-devel gobject-introspection-devel \
@@ -41,7 +41,7 @@ install_fedora() {
         wl-clipboard xclip libnotify \
         clang-devel
 
-    echo "[2/3] Adding $USER to 'input' group..."
+    echo "[2/4] Adding $USER to 'input' group..."
     if groups "$USER" | grep -q '\binput\b'; then
         echo "  Already in input group."
     else
@@ -49,16 +49,32 @@ install_fedora() {
         echo "  Added. You must log out and back in for this to take effect."
     fi
 
-    echo "[3/3] Building release binary..."
+    echo "[3/4] Building release binary..."
     cargo build --release
+
+    echo "[4/4] Installing application..."
+    install -d "$HOME/.local/bin"
+    install -m 755 target/release/voice-prompt "$HOME/.local/bin/"
+
+    install -d "$HOME/.local/share/applications"
+    install -m 644 voice-prompt.desktop "$HOME/.local/share/applications/"
+
+    install -d "$HOME/.local/share/icons/hicolor/scalable/apps"
+    install -m 644 resources/voice-prompt.svg "$HOME/.local/share/icons/hicolor/scalable/apps/"
+
+    # Update desktop database
+    update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
     echo ""
     echo "=== Setup complete ==="
-    echo "Binary: target/release/voice-prompt"
+    echo "Binary: $HOME/.local/bin/voice-prompt"
+    echo "Desktop entry: $HOME/.local/share/applications/voice-prompt.desktop"
+    echo ""
+    echo "Voice Prompt is now installed and available in your application menu!"
     echo ""
     echo "NOTE: If you were just added to the 'input' group, log out and back in first."
-    echo "To install as a systemd user service:"
-    echo "  cp target/release/voice-prompt ~/.cargo/bin/"
+    echo ""
+    echo "To auto-start on login (optional):"
     echo "  mkdir -p ~/.config/systemd/user"
     echo "  cp voice-prompt.service ~/.config/systemd/user/"
     echo "  systemctl --user daemon-reload"
@@ -66,14 +82,14 @@ install_fedora() {
 }
 
 install_debian() {
-    echo "[1/3] Installing Debian/Ubuntu packages..."
+    echo "[1/4] Installing Debian/Ubuntu packages..."
     sudo apt update
     sudo apt install -y \
         libgtk-4-dev libadwaita-1-dev libgtk4-layer-shell-dev \
         libasound2-dev pkg-config cmake g++ libclang-dev \
         wl-clipboard xclip libnotify-bin
 
-    echo "[2/3] Adding $USER to 'input' group..."
+    echo "[2/4] Adding $USER to 'input' group..."
     if groups "$USER" | grep -q '\binput\b'; then
         echo "  Already in input group."
     else
@@ -81,16 +97,32 @@ install_debian() {
         echo "  Added. You must log out and back in for this to take effect."
     fi
 
-    echo "[3/3] Building release binary..."
+    echo "[3/4] Building release binary..."
     cargo build --release
+
+    echo "[4/4] Installing application..."
+    install -d "$HOME/.local/bin"
+    install -m 755 target/release/voice-prompt "$HOME/.local/bin/"
+
+    install -d "$HOME/.local/share/applications"
+    install -m 644 voice-prompt.desktop "$HOME/.local/share/applications/"
+
+    install -d "$HOME/.local/share/icons/hicolor/scalable/apps"
+    install -m 644 resources/voice-prompt.svg "$HOME/.local/share/icons/hicolor/scalable/apps/"
+
+    # Update desktop database
+    update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
     echo ""
     echo "=== Setup complete ==="
-    echo "Binary: target/release/voice-prompt"
+    echo "Binary: $HOME/.local/bin/voice-prompt"
+    echo "Desktop entry: $HOME/.local/share/applications/voice-prompt.desktop"
+    echo ""
+    echo "Voice Prompt is now installed and available in your application menu!"
     echo ""
     echo "NOTE: If you were just added to the 'input' group, log out and back in first."
-    echo "To install as a systemd user service:"
-    echo "  cp target/release/voice-prompt ~/.cargo/bin/"
+    echo ""
+    echo "To auto-start on login (optional):"
     echo "  mkdir -p ~/.config/systemd/user"
     echo "  cp voice-prompt.service ~/.config/systemd/user/"
     echo "  systemctl --user daemon-reload"
@@ -98,13 +130,13 @@ install_debian() {
 }
 
 install_arch() {
-    echo "[1/3] Installing Arch packages..."
+    echo "[1/4] Installing Arch packages..."
     sudo pacman -S --needed --noconfirm \
         gtk4 libadwaita gtk4-layer-shell \
         alsa-lib pkg-config cmake clang \
         wl-clipboard xclip libnotify
 
-    echo "[2/3] Adding $USER to 'input' group..."
+    echo "[2/4] Adding $USER to 'input' group..."
     if groups "$USER" | grep -q '\binput\b'; then
         echo "  Already in input group."
     else
@@ -112,16 +144,32 @@ install_arch() {
         echo "  Added. You must log out and back in for this to take effect."
     fi
 
-    echo "[3/3] Building release binary..."
+    echo "[3/4] Building release binary..."
     cargo build --release
+
+    echo "[4/4] Installing application..."
+    install -d "$HOME/.local/bin"
+    install -m 755 target/release/voice-prompt "$HOME/.local/bin/"
+
+    install -d "$HOME/.local/share/applications"
+    install -m 644 voice-prompt.desktop "$HOME/.local/share/applications/"
+
+    install -d "$HOME/.local/share/icons/hicolor/scalable/apps"
+    install -m 644 resources/voice-prompt.svg "$HOME/.local/share/icons/hicolor/scalable/apps/"
+
+    # Update desktop database
+    update-desktop-database "$HOME/.local/share/applications" 2>/dev/null || true
 
     echo ""
     echo "=== Setup complete ==="
-    echo "Binary: target/release/voice-prompt"
+    echo "Binary: $HOME/.local/bin/voice-prompt"
+    echo "Desktop entry: $HOME/.local/share/applications/voice-prompt.desktop"
+    echo ""
+    echo "Voice Prompt is now installed and available in your application menu!"
     echo ""
     echo "NOTE: If you were just added to the 'input' group, log out and back in first."
-    echo "To install as a systemd user service:"
-    echo "  cp target/release/voice-prompt ~/.cargo/bin/"
+    echo ""
+    echo "To auto-start on login (optional):"
     echo "  mkdir -p ~/.config/systemd/user"
     echo "  cp voice-prompt.service ~/.config/systemd/user/"
     echo "  systemctl --user daemon-reload"

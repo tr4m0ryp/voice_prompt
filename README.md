@@ -36,7 +36,7 @@ Hotkey → Record Audio → Transcribe (Whisper) → Refine (Gemini) → Clipboa
 
 ### One-command install
 
-The installer auto-detects your OS and package manager:
+The installer auto-detects your OS and package manager, builds the application, and installs it to your system:
 
 ```bash
 git clone https://github.com/tr4m0ryp/voice-prompt.git
@@ -44,22 +44,34 @@ cd voice-prompt
 bash install.sh
 ```
 
-This handles everything — system dependencies, build, and post-install instructions.
+This handles everything — system dependencies, compilation, binary installation, desktop entry, and application icon.
 
 | Platform | Package manager | What it does |
 |----------|----------------|--------------|
 | **macOS** | Homebrew | Installs GTK4/libadwaita, builds, copies binary |
-| **Fedora** | dnf | Installs dev packages, adds `input` group, builds |
-| **Ubuntu/Debian** | apt | Installs dev packages, adds `input` group, builds |
-| **Arch** | pacman | Installs dev packages, adds `input` group, builds |
+| **Fedora** | dnf | Installs dev packages, adds `input` group, builds, installs desktop entry |
+| **Ubuntu/Debian** | apt | Installs dev packages, adds `input` group, builds, installs desktop entry |
+| **Arch** | pacman | Installs dev packages, adds `input` group, builds, installs desktop entry |
 
 ### Run
 
+After installation, Voice Prompt appears in your application menu. You can also run it from the terminal:
+
 ```bash
-./target/release/voice-prompt
+voice-prompt
 ```
 
 On first launch, the Whisper model (~140 MB) downloads automatically. The settings dashboard opens where you can configure your hotkey and optionally add a Gemini API key.
+
+### Uninstall
+
+To remove Voice Prompt from your system:
+
+```bash
+bash uninstall.sh
+```
+
+You'll be prompted whether to remove configuration and data files.
 
 ### Auto-start (optional)
 
